@@ -7,6 +7,15 @@
 }
 
 .title{
+  font-family: var(--Inconsolata-mono);
+  font-weight: var(--Inconsolata-bold);
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 14px 0;
+  @media (max-width: 1020px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
   will-change: transform, opacity;
 }
 
@@ -18,7 +27,7 @@
   margin-bottom: 23px;
   border-radius: 5px;
   opacity: 1;
-  will-change: transform, opacity;
+  will-change: transform, opacity; /* GSAP will override this to 0 at the start */
 }
 
 .start-button-text {
