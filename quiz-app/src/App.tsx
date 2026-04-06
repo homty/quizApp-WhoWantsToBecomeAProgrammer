@@ -1,4 +1,4 @@
-import Welcome from './components/WelcomeAnimation/welcomeAnimation.tsx';
+import Welcome from './pages/WelcomeAnimation/welcomeAnimation.tsx';
 import './App.css';
 
 function App() {
