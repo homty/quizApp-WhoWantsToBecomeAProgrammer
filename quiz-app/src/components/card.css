@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1rem;
+  margin: 14px;
 }
 
 .button-design {
@@ -10,10 +10,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  box-shadow: #4299e1;
+  background-color: #2e2e2e;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1rem;
   width: 250px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -23,7 +24,7 @@
 }
 
 .button-design:hover {
-  transform: translateY(-5px);
+  transform: scale(1.05);
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   border-color: #d0d0d0;
 }
@@ -54,13 +55,13 @@
   margin: 0 0 0.5rem 0;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #333333;
+  color: #ececec;
 }
 
 .description {
   margin: 0;
   font-size: 1rem;
-  color: #666666;
+  color: #ecececad;
   text-align: center;
   line-height: 1.4;
 }

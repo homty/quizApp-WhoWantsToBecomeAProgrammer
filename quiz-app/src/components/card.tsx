@@ -3,8 +3,8 @@ import { QuizIcons, type QuizTopic } from '../assets/quizIcons.ts';
 
 interface CardProps {
   topic: QuizTopic; // TS will enforce that this is a valid key!
-  title: text;
-  description: text;
+  title: string;
+  description: string;
   onClick: () => void;
 }
 

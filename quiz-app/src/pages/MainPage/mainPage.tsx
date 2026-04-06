@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Card from "../../components/card.tsx";
-import { QuizIcons, type QuizTopic } from '../../assets/quizIcons.ts';
+import { type QuizTopic } from '../../assets/quizIcons.ts';
+import './mainPage.css';
 
 const QuizContent: Record<QuizTopic, { title: string; description: string }> = {
   docker: {
@@ -25,18 +26,20 @@ const MainPage = () => {
   };
 
   return (
-    <div>
-      <h1 className="title">Select your Quiz</h1>
-      {(Object.keys(QuizContent) as QuizTopic[]).map((topic) => (
-        <Card
-          key={topic}
-          topic={topic} 
-          title={QuizContent[topic].title} 
-          description={QuizContent[topic].description} 
-          onClick={() => handleCardClick(topic)} 
-        />
-      ))}
-      
+    <div className='title-container'>
+      <h1 className="title-main-page">Select your Quiz</h1>
+      <p className='description-main-page'>Browse the cards below, pick your topic, and view the related question results instantly</p>
+      <div className='card-space-container'>
+        {(Object.keys(QuizContent) as QuizTopic[]).map((topic) => (
+          <Card
+            key={topic}
+            topic={topic} 
+            title={QuizContent[topic].title} 
+            description={QuizContent[topic].description} 
+            onClick={() => handleCardClick(topic)} 
+          />
+        ))}
+      </div>
     </div>
   );
 };
