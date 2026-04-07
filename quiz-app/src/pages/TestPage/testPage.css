@@ -1,0 +1,75 @@
+/* The box containing the question */
+.quiz-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2e2e2e;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 2.5rem;
+  width: 90%;
+  max-width: 700px; /* Limits width on big screens */
+  box-shadow: 0 2.5px 25px var(--hover-shadow, rgba(255, 255, 255, 0.2)); 
+  border-color: var(--hover-border, #d0d0d0);
+}
+
+.question-count {
+  color: #10f70896; /* Matches your green theme */
+  font-family: var(--Inconsolata-mono, monospace);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.question-text {
+  margin: 0 0 2rem 0;
+  font-size: 1.8rem;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Container for the buttons */
+.options-grid {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically for better reading */
+  gap: 12px;
+  width: 100%;
+}
+
+/* Individual answer buttons */
+.option-button {
+  background-color: #3a3a3a;
+  border: 1px solid #555;
+  color: #ffffff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  text-align: left; /* Align text to the left for easier reading */
+}
+
+.option-button:hover {
+  background-color: #444;
+  border-color:var(--hover-border, #d0d0d0); /* Glow green on hover */
+  transform: scale(0.97);
+  transition: all 0.4s ease; /* Subtle slide effect */
+}
+
+.option-button:active {
+  transform: scale(0.90);
+}
+
+.quiz-card.react {
+  --hover-border: #61DAFB;
+  --hover-shadow: rgba(97, 218, 251, 0.5); 
+}
+
+.quiz-card.docker {
+  --hover-border: #2496ED;
+  --hover-shadow: rgba(36, 150, 237, 0.5);
+}
+
+.quiz-card.git {
+  --hover-border: #F05032;
+  --hover-shadow: rgba(240, 80, 50, 0.5);
+}

@@ -26,8 +26,8 @@
 }
 
 .title {
-  font-family: var(--Inconsolata-mono);
-  font-weight: var(--Inconsolata-bold);
+  font-family: var(--Inconsolata-mono, monospace);
+  font-weight: 700;
   font-size: clamp(36px, 5vw, 56px);
   letter-spacing: -1.68px;
   text-align: center;
@@ -58,22 +58,13 @@
 .prompt-arrow {
   color: var(--color-text-white);
   margin-right: 8px;
-  font-family: var(--JetBrains-mono);
+  font-family: var(--JetBrains-mono, monospace);
 }
 
 .start-button-text {
-  font-family: var(--JetBrains-mono);
+  font-family: var(--JetBrains-mono, monospace);
   font-variant-ligatures: discretionary-ligatures;
-  font-weight: var(--JetBrains-light); 
   font-size: 1.2rem;
   letter-spacing: 0.5px; 
   color: var(--color-text-green); 
-}
-
-.main-page-wrapper {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
 }

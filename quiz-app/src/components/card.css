@@ -10,7 +10,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: #4299e1;
   background-color: #2e2e2e;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
@@ -18,20 +17,20 @@
   width: 250px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   font-family: inherit;
   outline: none;
 }
 
 .button-design:hover {
   transform: scale(1.05);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  border-color: #d0d0d0;
+  box-shadow: 0 10px 25px var(--hover-shadow, rgba(255, 255, 255, 0.2)); 
+  border-color: var(--hover-border, #d0d0d0);
 }
 
 .button-design:active {
   transform: translateY(0);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .button-design:focus-visible {
@@ -64,4 +63,20 @@
   color: #ecececad;
   text-align: center;
   line-height: 1.4;
+}
+
+/* --- Dynamic Topic Colors --- */
+.button-design.react {
+  --hover-border: #61DAFB;
+  --hover-shadow: rgba(97, 218, 251, 0.5); 
+}
+
+.button-design.docker {
+  --hover-border: #2496ED;
+  --hover-shadow: rgba(36, 150, 237, 0.5);
+}
+
+.button-design.git {
+  --hover-border: #F05032;
+  --hover-shadow: rgba(240, 80, 50, 0.5);
 }

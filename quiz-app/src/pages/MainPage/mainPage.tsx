@@ -21,14 +21,16 @@ const QuizContent: Record<QuizTopic, { title: string; description: string }> = {
 const MainPage = () => {
   const navigate = useNavigate();
 
- const handleCardClick = (topic: QuizTopic) => {
+  const handleCardClick = (topic: QuizTopic) => {
     navigate(`/${topic}`); 
   };
 
   return (
     <div className='title-container'>
+      <span className="persistent-logo">DevQuiz</span>
       <h1 className="title-main-page">Select your Quiz</h1>
       <p className='description-main-page'>Browse the cards below, pick your topic, and view the related question results instantly</p>
+      
       <div className='card-space-container'>
         {(Object.keys(QuizContent) as QuizTopic[]).map((topic) => (
           <Card

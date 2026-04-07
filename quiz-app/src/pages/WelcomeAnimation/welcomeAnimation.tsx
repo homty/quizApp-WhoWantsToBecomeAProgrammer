@@ -1,21 +1,24 @@
-import { useState, useRef, lazy, Suspense } from 'react';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { TextPlugin } from 'gsap/TextPlugin';
-import { Routes, Route } from 'react-router-dom';
+import './welcomeStyle.css';
 
-
-const MainPage = lazy(() => import('../MainPage/mainPage.tsx'));
 gsap.registerPlugin(useGSAP, TextPlugin);
 
+// 1. Tell Vite/Webpack to fetch this file when called
+const preloadMainPage = () => {
+  import('../MainPage/mainPage.tsx');
+};
+
 const Welcome = () => {
-  const [isQuizStarted, setIsQuizStarted] = useState(false);
   const container = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useGSAP(() => {
     const tl = gsap.timeline();
     
-    // Initial states
     gsap.set(".start-button-text", { text: "" });
 
     tl.from(".title", { 
@@ -26,7 +29,7 @@ const Welcome = () => {
     })
     .from(".start-button", { 
       opacity: 0, 
-      y: 20, /* Adds a subtle upward float to the button */
+      y: 20,
       duration: 0.4 
     }, "-=0.4") 
     .to(".start-button-text", { 
@@ -37,11 +40,9 @@ const Welcome = () => {
   }, { scope: container });
 
   const handleStart = () => {
-    //Hide the button and the "Welcome to" prefix
     gsap.to(".start-button", { opacity: 0, y: 20, duration: 0.5, pointerEvents: "none" });
     gsap.to(".welcome-text", { opacity: 0, duration: 0.5, ease: "power2.out" });
 
-    //Dynamically calculate the logo's flight path
     const logoEl = container.current?.querySelector(".logo-text");
     const destEl = container.current?.querySelector(".header-destination");
 
@@ -49,7 +50,6 @@ const Welcome = () => {
       const logoRect = logoEl.getBoundingClientRect();
       const destRect = destEl.getBoundingClientRect();
 
-      //(Where we want to be) - (Where we are right now)
       const moveX = destRect.left - logoRect.left; 
       const moveY = destRect.top - logoRect.top;
 
@@ -60,7 +60,7 @@ const Welcome = () => {
         duration: 1,
         ease: "power3.inOut",
         onComplete: () => {
-          setIsQuizStarted(true);
+          navigate('/home'); 
         }
       });
     }
@@ -68,7 +68,6 @@ const Welcome = () => {
 
   return (
     <div ref={container} className="welcome-container">
-
       <div className="header-destination"/>
 
       <h1 className="title">
@@ -76,21 +75,15 @@ const Welcome = () => {
         <span className="logo-text">DevQuiz</span>
       </h1>
       
-      <button className="start-button" onClick={handleStart}>
+      {/* 2. Trigger the download on hover */}
+      <button 
+        className="start-button" 
+        onMouseEnter={preloadMainPage}
+        onClick={handleStart}
+      >
         <span className="prompt-arrow">{'>'}</span>
         <span className="start-button-text">Hello world!</span>
       </button>
-
-      {isQuizStarted && (
-        <div className="main-page-wrapper">
-          <Suspense>
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route path="/quiz" element={<div>Quiz Page Coming Soon!</div>} />
-            </Routes>
-          </Suspense>
-        </div>
-      )}
     </div>
   );
 };
