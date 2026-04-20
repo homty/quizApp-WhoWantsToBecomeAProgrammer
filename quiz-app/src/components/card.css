@@ -65,7 +65,7 @@
   line-height: 1.4;
 }
 
-/* --- Dynamic Topic Colors --- */
+/*Dynamic topic colors*/
 .button-design.react {
   --hover-border: #61DAFB;
   --hover-shadow: rgba(97, 218, 251, 0.5); 

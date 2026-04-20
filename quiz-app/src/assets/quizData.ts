@@ -52,7 +52,7 @@ export const DockerQuiz: Question[] = [
       "A tool for monitoring CPU usage"
     ],
     correctAnswer: "A public registry for sharing container images"
-  }
+  },
 ];
 
 export const ReactQuiz: Question[] = [
@@ -61,7 +61,7 @@ export const ReactQuiz: Question[] = [
     question: "What is React?",
     options: ["A JavaScript library for building user interfaces", "A server-side language", "A database management system", "An operating system"],
     correctAnswer: "A JavaScript library for building user interfaces"
-  }
+  },
 ];
 
 export const GitQuiz: Question[] = [

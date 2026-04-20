@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { type QuizTopic } from '../../assets/quizIcons.ts';
-import { DockerQuiz, ReactQuiz, GitQuiz, type Question } from '../../assets/quizData.ts'; // Import your questions
+import { DockerQuiz, ReactQuiz, GitQuiz, type Question } from '../../assets/quizData.ts';
 import './testPage.css';
 
 const quizMap: Record<string, Question[]> = {
@@ -11,35 +11,54 @@ const quizMap: Record<string, Question[]> = {
 };
 
 const TestPage = () => {
-  const { topic } = useParams<{ topic: QuizTopic }>();
-  const navigate = useNavigate();
+  /*React routers
+  useParams for creating specific URL using REACT router, 
+  and useNavigate for navigate between URLs that already exist
+  */
+  const { topic } = useParams<{ topic: QuizTopic }>(); 
+  const navigate = useNavigate(); 
   
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  
+  const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
 
-  const questions = topic ? quizMap[topic] || [] : [];
+  let questions: Question[] = [];
+  if (topic && quizMap[topic]) {
+    questions = quizMap[topic];
+  }
   const currentQuestion = questions[currentIndex];
 
   const handleAnswerClick = (selectedOption: string) => {
-    if (selectedOption === currentQuestion.correctAnswer) {
-      setScore(prev => prev + 1);
-    }
+    const copiedAnswers = { ...userAnswers };
+    copiedAnswers[currentIndex] = selectedOption;
+    setUserAnswers(copiedAnswers);
 
     const nextIndex = currentIndex + 1;
-    if (nextIndex < questions.length) {
-      setCurrentIndex(nextIndex);
-    } else {
+    const isFinished = nextIndex === questions.length;
+    if (isFinished) {
       setShowResults(true);
+    } else {
+      setCurrentIndex(nextIndex);
     }
+  };
+
+  const calculateFinalScore = () => {
+    let finalScore = 0;
+    questions.forEach((q, index) => {
+      if (userAnswers[index] === q.correctAnswer) {
+        finalScore += 1;
+      }
+    });
+    return finalScore;
   };
 
   if (showResults) {
     return (
       <div className="title-container">
         <h1>Quiz Complete!</h1>
-        <p>Your Score: {score} / {questions.length}</p>
-        <button className="start-button" onClick={() => navigate('/home')}>
+        <p>Your Score: {calculateFinalScore()} / {questions.length}</p>
+        <button className="start-button" onClick={() => navigate('/home')}> 
            <span className="start-button-text">Back to Home</span>
         </button>
       </div>
@@ -49,22 +68,44 @@ const TestPage = () => {
   return (
     <div className="title-container">
         <span className="persistent-logo">DevQuiz</span>
-        
+
         <div className={`quiz-card ${topic}`}>
-        <p className="question-count">Question {currentIndex + 1} of {questions.length}</p>
-        <h2 className="question-text">{currentQuestion?.question}</h2>
+          <div className="progress-segments-container" aria-label="Quiz progress">
+            {questions.map((_, index) => {
+              //Check if an answer exists for this index
+              const isAnswered = userAnswers[index] !== undefined;
+              const isCurrent = index === currentIndex;
+
+              return (
+                <button 
+                  key={index} 
+                  className={`progress-segment ${isAnswered ? 'answered' : ''} ${isCurrent ? 'current' : ''}`}
+                  onClick={() => setCurrentIndex(index)}
+                  aria-label={`Go to question ${index + 1}`}
+                  title={`Question ${index + 1}`}
+                ></button>
+              );
+            })}
+          </div>
         
-        <div className="options-grid">
-            {currentQuestion?.options.map((option, index) => (
-            <button 
-                key={index} 
-                className="option-button"
-                onClick={() => handleAnswerClick(option)}
-            >
-                {option}
-            </button>
-            ))}
-        </div>
+          <h2 className="question-text">{currentQuestion?.question}</h2>
+          
+          <div className="options-grid">
+              {currentQuestion?.options.map((option, index) => {
+                //we check our answers to know, if the user answered on it
+                const isSelected = userAnswers[currentIndex] === option;
+
+                return (
+                  <button 
+                      key={index} 
+                      className={`option-button ${isSelected ? 'selected' : ''}`}
+                      onClick={() => handleAnswerClick(option)}
+                  >
+                      {option}
+                  </button>
+                );
+              })}
+          </div>
         </div>
     </div>
   );

@@ -3,19 +3,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 70vh; /* Perfectly centers vertically */
-  gap: 5px; /* This now controls the exact spacing */
+  min-height: 70vh;
+  gap: 5px;
   position: relative;
   margin: 0;
   padding: 0;
 }
 
-/* Added margin: 0 here to remove default <h1> spacing */
 .title-main-page {
   margin: 0;
 }
 
-/* Added margin: 0 here to remove default <p> spacing */
 .description-main-page {
   padding-top: 5px;
 }
@@ -28,7 +26,6 @@
   margin-top: 10px;
 }
 
-/* This locks the logo into the exact place GSAP left it */
 .persistent-logo {
   position: absolute;
   top: 2rem;
