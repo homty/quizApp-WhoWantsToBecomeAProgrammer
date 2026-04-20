@@ -7,7 +7,6 @@ import './welcomeStyle.css';
 
 gsap.registerPlugin(useGSAP, TextPlugin);
 
-// 1. Tell Vite/Webpack to fetch this file when called
 const preloadMainPage = () => {
   import('../MainPage/mainPage.tsx');
 };
@@ -74,8 +73,6 @@ const Welcome = () => {
         <span className="welcome-text">Welcome to </span>
         <span className="logo-text">DevQuiz</span>
       </h1>
-      
-      {/* 2. Trigger the download on hover */}
       <button 
         className="start-button" 
         onMouseEnter={preloadMainPage}
