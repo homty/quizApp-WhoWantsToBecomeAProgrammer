@@ -65,6 +65,27 @@
   cursor: default;
 }
 
+.back-button {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+  padding: 14px 24px;
+  font-size: 1.2rem; 
+  background-color: var(--color-bg-dark);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 5px;
+  cursor: pointer;
+  will-change: transform, opacity;
+}
+
+.back-button-text {
+  font-family: var(--JetBrains-mono, monospace);
+  font-variant-ligatures: discretionary-ligatures;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px; 
+  color: var(--color-text-green); 
+}
+
 .option-button.correct-answer {
   background-color: rgba(74, 222, 128, 0.15);
   border: 2px solid #4ade80;
@@ -161,7 +182,40 @@
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
 }
 
+.summary-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  text-align: center;
+  color: #ffffff;
+}
 
+.summary-status {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.summary-status.complete {
+  color: #4ade80; 
+}
+
+.summary-status.complete strong {
+  color: #ffffff;
+}
+
+.summary-status.incomplete {
+  color: #f87171; 
+  font-weight: bold;
+}
+
+.summary-subtitle {
+  color: #a0a0a0; 
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
 
 .quiz-card.react {
   --hover-border: #61DAFB;

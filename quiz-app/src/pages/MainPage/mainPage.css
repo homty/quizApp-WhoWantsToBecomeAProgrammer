@@ -12,10 +12,13 @@
 
 .title-main-page {
   margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 .description-main-page {
   padding-top: 5px;
+  font-size: 1.2rem;
 }
 
 .card-space-container {
