@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { type QuizTopic } from '../../assets/quizIcons.ts';
 import { DockerQuiz, ReactQuiz, GitQuiz, type Question } from '../../assets/quizData.ts';
+import { getShuffledQuiz } from '../../assets/quizData.ts';
 import ActiveQuiz from '../../components/ActiveQuiz.tsx';
 import PreSubmitReview from '../../components/PreSubmitReview.tsx';
 import FinalResults from './../../components/FinalResults.tsx';
@@ -33,7 +34,9 @@ const TestPage = () => {
     );
   }
 
-  const questions: Question[] = quizMap[topic];
+  const questions: Question[] = useMemo(() => {
+    return topic && quizMap[topic] ? getShuffledQuiz(quizMap[topic]) : [];
+  }, [topic]);
   const isLastQuestion = currentIndex === questions.length - 1;
 
   const handleAnswerClick = (selectedOption: string) => {
@@ -57,7 +60,6 @@ const TestPage = () => {
     }, 0);
   };
 
-  // --- Render Logic ---
   return (
     <div className="title-container">
         <span className="persistent-logo">DevQuiz</span>
