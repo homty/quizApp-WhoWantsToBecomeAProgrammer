@@ -41,13 +41,23 @@ const TestPage = () => {
 
   const handleAnswerClick = (selectedOption: string) => {
     setUserAnswers(prev => ({ ...prev, [currentIndex]: selectedOption }));
-    if (isLastQuestion) setIsReviewScreen(true);
-    else setCurrentIndex(currentIndex + 1);
+    if (isLastQuestion){
+      setIsReviewScreen(true);
+    }
+    else 
+    {
+      setCurrentIndex(currentIndex + 1);
+    }
   };
 
   const handleSkipClick = () => {
-    if (isLastQuestion) setIsReviewScreen(true);
-    else setCurrentIndex(currentIndex + 1);
+    if (isLastQuestion){
+      setIsReviewScreen(true)
+    }
+    else 
+    {
+      setCurrentIndex(currentIndex + 1);
+    }
   };
 
   const handlePreviousClick = () => {
