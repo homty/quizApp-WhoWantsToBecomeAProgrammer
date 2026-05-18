@@ -40,8 +40,13 @@ const FinalResults = ({ topic, questions, userAnswers, score, earnedXP }: FinalR
         <h1 className="summary-title">Quiz Complete!</h1>
         <p>Your Score: {score} / {questions.length}</p>
         
+<<<<<<< HEAD
         <div className="xp-reward-container">
             <h2 style={{ color: '#4ade80', fontSize: '2rem', margin: '10px' }}>
+=======
+        <div className="xp-reward-container" style={{ margin: '20px 0' }}>
+            <h2 style={{ color: '#4ade80', fontSize: '2rem', margin: '10px 0' }}>
+>>>>>>> 3b89d22b8824a62da9a5c975ee05c203bf15feaa
                +<span ref={xpRef}>0</span> XP
             </h2>
         </div>
