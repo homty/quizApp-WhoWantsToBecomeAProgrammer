@@ -12,6 +12,7 @@ const quizMap: Record<string, Question[]> = {
   docker: DockerQuiz,
   react: ReactQuiz,
   git: GitQuiz
+  
 };
 
 const TestPage = () => {
@@ -22,6 +23,7 @@ const TestPage = () => {
   const [showResults, setShowResults] = useState(false);
   const [isReviewScreen, setIsReviewScreen] = useState(false); 
   const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
+  const [earnedXP, setEarnedXP] = useState(0);
 
   if (!topic || !quizMap[topic]) {
     return (
@@ -70,6 +72,20 @@ const TestPage = () => {
     }, 0);
   };
 
+  const handleFinalSubmit = () => {
+    const score = calculateFinalScore();
+    const maxScore = questions.length;
+    
+    let calculatedXP = score * 10; 
+    
+    if (score === maxScore && maxScore > 0) {
+      calculatedXP += 50; 
+    }
+
+    setEarnedXP(calculatedXP);
+    setShowResults(true);
+  };
+
   return (
     <div className="title-container">
         <span className="persistent-logo">DevQuiz</span>
@@ -79,7 +95,8 @@ const TestPage = () => {
             topic={topic} 
             questions={questions} 
             userAnswers={userAnswers} 
-            score={calculateFinalScore()} 
+            score={calculateFinalScore()}
+            earnedXP={earnedXP} 
           />
         ) : isReviewScreen ? (
           <PreSubmitReview 
@@ -90,7 +107,7 @@ const TestPage = () => {
               setCurrentIndex(index);
               setIsReviewScreen(false);
             }}
-            onSubmit={() => setShowResults(true)}
+            onSubmit={handleFinalSubmit} 
           />
         ) : (
           <ActiveQuiz 
