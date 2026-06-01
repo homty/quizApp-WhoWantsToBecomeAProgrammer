@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { TextPlugin } from 'gsap/TextPlugin';
+import { isProfileInitialized } from '../../utils/profileStorage.ts';
 import './welcomeStyle.css';
 
 gsap.registerPlugin(useGSAP, TextPlugin);
@@ -59,7 +60,11 @@ const Welcome = () => {
         duration: 1,
         ease: "power3.inOut",
         onComplete: () => {
-          navigate('/home'); 
+          if (isProfileInitialized()) {
+            navigate('/home');
+          } else {
+            navigate('/setup');
+          }
         }
       });
     }

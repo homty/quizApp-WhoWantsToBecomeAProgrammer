@@ -1,7 +1,7 @@
 .card {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   margin: 14px;
 }
 
@@ -9,12 +9,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #2e2e2e;
-  border: 1px solid #e0e0e0;
+  justify-content: flex-start;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 12px;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   width: 250px;
+  height: 100%;
+  min-height: 250px;
+  box-sizing: border-box;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -22,15 +25,15 @@
   outline: none;
 }
 
-.button-design:hover {
+.card:hover .button-design {
   transform: scale(1.05);
-  box-shadow: 0 10px 25px var(--hover-shadow, rgba(255, 255, 255, 0.2)); 
+  box-shadow: 0 10px 25px var(--hover-shadow, rgba(255, 255, 255, 0.2));
   border-color: var(--hover-border, #d0d0d0);
 }
 
-.button-design:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+.card .button-design:active {
+  transform: scale(0.98) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .button-design:focus-visible {
@@ -46,7 +49,7 @@
   transition: transform 0.3s ease;
 }
 
-.button-design:hover .card-img {
+.card:hover .card-img {
   transform: scale(1.05);
 }
 
@@ -54,21 +57,115 @@
   margin: 0 0 0.5rem 0;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #ececec;
+  color: var(--text-light);
 }
 
 .description {
   margin: 0;
   font-size: 1rem;
-  color: #ecececad;
+  color: var(--text-muted);
   text-align: center;
   line-height: 1.4;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/*Dynamic topic colors*/
+.button-design.custom {
+  --hover-border: var(--text-white);
+  --hover-shadow: var(--card-border-hover);
+}
+
+.delete-card-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(15, 15, 15, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 0;
+  outline: none;
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+.card:hover .delete-card-btn {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.delete-card-btn:hover {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: var(--color-error-hover);
+}
+
+.delete-card-btn:active {
+  background: rgba(239, 68, 68, 0.35);
+  border-color: var(--color-error-hover);
+  transform: scale(0.92) !important;
+}
+
+.card-completion-stats {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.card-score-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--hover-border, var(--text-white));
+}
+
+.card-plays-pill {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.card-progress-track {
+  width: 100%;
+  height: 4px;
+  background-color: #1a1a1a;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.card-progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background-color: var(--hover-border, var(--color-blue));
+  box-shadow: 0 0 8px var(--hover-shadow);
+  transition: width 0.8s ease-out;
+}
+
 .button-design.react {
-  --hover-border: #61DAFB;
-  --hover-shadow: rgba(97, 218, 251, 0.5); 
+  --hover-border: var(--color-blue);
+  --hover-shadow: var(--color-blue-glow);
 }
 
 .button-design.docker {
@@ -77,6 +174,26 @@
 }
 
 .button-design.git {
-  --hover-border: #F05032;
-  --hover-shadow: rgba(240, 80, 50, 0.5);
+  --hover-border: var(--color-red);
+  --hover-shadow: var(--color-red-glow);
+}
+
+.custom-uploaded-svg {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .custom-uploaded-svg {
+  transform: scale(1.05);
+}
+
+.custom-uploaded-svg svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }

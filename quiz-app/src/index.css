@@ -1,5 +1,37 @@
 @import './styles/fonts.css';
 
+:root {
+  --bg-dark: #0F0F0F;
+  --card-bg: #2e2e2e;
+  --card-border: #444444;
+  --card-border-hover: rgba(255, 255, 255, 0.25);
+
+  --text-white: #ffffff;
+  --text-muted: #ecececad;
+  --text-dim: #4a5568;
+
+  --color-green: #10f708;
+  --color-green-glow: rgba(16, 247, 8, 0.2);
+
+  --color-blue: #61DAFB;
+  --color-blue-glow: rgba(97, 218, 251, 0.2);
+
+  --color-red: #F05032;
+  --color-red-glow: rgba(240, 80, 50, 0.2);
+
+  --color-success: #4ade80;
+  --color-error: #f87171;
+  --color-error-hover: #ef4444;
+  --color-purple: #A78BFA;
+  --color-purple-hover: #C084FC;
+
+  --bg-input: #1e1e1e;
+  --text-light: #ececec;
+
+  --mono: var(--JetBrains-mono, monospace);
+  --logo-font: var(--Inconsolata-mono, monospace);
+}
+
 #root {
   margin: 0 auto;
   text-align: center;
@@ -10,9 +42,48 @@
 }
 
 body {
-  background-color: #0F0F0F; 
-  color: #ffffff;          
+  background-color: var(--bg-dark);
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--text-white);
   font-family: var(--mono);
-  margin: 0;               
+  margin: 0;
   padding: 0;
+}
+
+.persistent-logo {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-family: var(--logo-font);
+  font-weight: 700;
+  font-size: clamp(36px, 5vw, 56px);
+  letter-spacing: -1.68px;
+  transform: scale(0.5);
+  transform-origin: left top;
+  margin: 0;
+  color: var(--text-white);
+  z-index: 100;
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.persistent-logo:hover {
+  opacity: 0.8;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 5px;
+  position: relative;
+  margin: 0;
+  padding: 80px 2rem 2rem 2rem;
+  box-sizing: border-box;
 }

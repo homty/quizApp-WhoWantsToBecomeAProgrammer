@@ -1,10 +1,3 @@
-:root {
-  --color-bg-dark: #2e2e2e;
-  --color-border-dark: #444;
-  --color-text-green: #10f708;
-  --color-text-white: #ffffff;
-}
-
 .welcome-container {
   position: relative;
   display: flex;
@@ -26,7 +19,7 @@
 }
 
 .title {
-  font-family: var(--Inconsolata-mono, monospace);
+  font-family: var(--logo-font);
   font-weight: 700;
   font-size: clamp(36px, 5vw, 56px);
   letter-spacing: -1.68px;
@@ -48,23 +41,23 @@
   align-items: center;
   padding: 14px 24px;
   font-size: 1.2rem; 
-  background-color: var(--color-bg-dark);
-  border: 1px solid var(--color-border-dark);
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 5px;
   cursor: pointer;
   will-change: transform, opacity;
 }
 
 .prompt-arrow {
-  color: var(--color-text-white);
+  color: var(--text-white);
   margin-right: 8px;
-  font-family: var(--JetBrains-mono, monospace);
+  font-family: var(--mono);
 }
 
 .start-button-text {
-  font-family: var(--JetBrains-mono, monospace);
+  font-family: var(--mono);
   font-variant-ligatures: discretionary-ligatures;
   font-size: 1.2rem;
   letter-spacing: 0.5px; 
-  color: var(--color-text-green); 
+  color: var(--color-green); 
 }

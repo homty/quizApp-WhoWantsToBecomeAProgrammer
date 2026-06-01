@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { type Question } from '../assets/quizData.ts';
 
 interface PreSubmitReviewProps {
@@ -15,12 +16,13 @@ const PreSubmitReview = ({
   onNavigateQuestion,
   onSubmit
 }: PreSubmitReviewProps) => {
+  const navigate = useNavigate();
   const answeredCount = Object.keys(userAnswers).length;
   const totalCount = questions.length;
 
   return (
     <div className={`quiz-card ${topic}`}>
-      <span className="persistent-logo">DevQuiz</span>
+      <span className="persistent-logo" onClick={() => navigate('/home')}>DevQuiz</span>
       
       <div className="progress-segments-container" aria-label="Quiz progress">
         {questions.map((_, index) => {

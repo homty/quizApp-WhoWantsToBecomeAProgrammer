@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { type Question } from '../assets/quizData.ts';
+import { recordQuizResult } from '../utils/profileStorage.ts';
 
 interface FinalResultsProps {
   topic: string;
@@ -18,6 +19,16 @@ const FinalResults = ({ topic, questions, userAnswers, score, earnedXP }: FinalR
 
   const isReviewing = reviewIndex !== null;
   const reviewQuestion = isReviewing ? questions[reviewIndex] : null;
+
+  const hasRecorded = useRef(false);
+
+  useEffect(() => {
+    if (!hasRecorded.current) {
+      recordQuizResult(topic, score, questions.length, earnedXP);
+      hasRecorded.current = true;
+    }
+  }, [topic, score, questions.length, earnedXP]);
+
   useEffect(() => {
     if (!isReviewing && xpRef.current) {
       gsap.fromTo(
@@ -38,15 +49,15 @@ const FinalResults = ({ topic, questions, userAnswers, score, earnedXP }: FinalR
     viewContent = (
       <>
         <h1 className="summary-title">Quiz Complete!</h1>
-        <p>Your Score: {score} / {questions.length}</p>S
-        
+        <p>Your Score: {score} / {questions.length}</p>
+
         <div className="xp-reward-container">
-            <h2 style={{ color: '#4ade80', fontSize: '2rem', margin: '10px' }}>
-               +<span ref={xpRef}>0</span> XP
-            </h2>
+          <h2 style={{ color: '#4ade80', fontSize: '2rem', margin: '10px' }}>
+            +<span ref={xpRef}>0</span> XP
+          </h2>
         </div>
 
-        <button className="back-button" onClick={() => navigate('/')}> 
+        <button className="back-button" onClick={() => navigate('/home')}>
           <span className="back-button-text">Back to Home</span>
         </button>
       </>
@@ -59,14 +70,14 @@ const FinalResults = ({ topic, questions, userAnswers, score, earnedXP }: FinalR
           {reviewQuestion?.options.map((option, index) => {
             const isUserAnswer = userAnswers[reviewIndex] === option;
             const isCorrectAnswer = reviewQuestion?.correctAnswer === option;
-            
+
             let optionClass = '';
             if (isCorrectAnswer) optionClass = 'correct-answer';
             else if (isUserAnswer && !isCorrectAnswer) optionClass = 'wrong-answer';
 
             return (
               <button key={index} className={`option-button ${optionClass}`} disabled>
-                  {option}
+                {option}
               </button>
             );
           })}
@@ -80,15 +91,15 @@ const FinalResults = ({ topic, questions, userAnswers, score, earnedXP }: FinalR
 
   return (
     <div className={`quiz-card ${topic}`}>
-      <span className="persistent-logo">DevQuiz</span>
+      <span className="persistent-logo" onClick={() => navigate('/home')}>DevQuiz</span>
       <div className="progress-segments-container" aria-label="Quiz progress">
         {questions.map((q, index) => {
           const isCorrect = userAnswers[index] === q.correctAnswer;
           const statusClass = isCorrect ? 'correct' : 'incorrect';
           const isCurrent = index === reviewIndex;
           return (
-            <button 
-              key={index} 
+            <button
+              key={index}
               className={`progress-segment ${statusClass} ${isCurrent ? 'current' : ''}`}
               onClick={() => setReviewIndex(index)}
               aria-label={`Review Question ${index + 1}`}
@@ -97,7 +108,7 @@ const FinalResults = ({ topic, questions, userAnswers, score, earnedXP }: FinalR
           );
         })}
       </div>
-      
+
       {viewContent}
 
     </div>

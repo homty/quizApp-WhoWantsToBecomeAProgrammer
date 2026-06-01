@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { type QuizTopic } from '../../assets/quizIcons.ts';
 import { DockerQuiz, ReactQuiz, GitQuiz, type Question } from '../../assets/quizData.ts';
 import { getShuffledQuiz } from '../../assets/quizData.ts';
 import ActiveQuiz from '../../components/ActiveQuiz.tsx';
@@ -12,52 +11,69 @@ const quizMap: Record<string, Question[]> = {
   docker: DockerQuiz,
   react: ReactQuiz,
   git: GitQuiz
-  
+
 };
 
 const TestPage = () => {
-  const { topic } = useParams<{ topic: QuizTopic }>(); 
-  const navigate = useNavigate(); 
-  
+  const { topic } = useParams<{ topic: string }>();
+  const navigate = useNavigate();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showResults, setShowResults] = useState(false);
-  const [isReviewScreen, setIsReviewScreen] = useState(false); 
+  const [isReviewScreen, setIsReviewScreen] = useState(false);
   const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
   const [earnedXP, setEarnedXP] = useState(0);
 
-  if (!topic || !quizMap[topic]) {
+  const questions: Question[] = useMemo(() => {
+    if (!topic) return [];
+    if (quizMap[topic]) {
+      return getShuffledQuiz(quizMap[topic]);
+    }
+
+    try {
+      const stored = localStorage.getItem('devquiz_custom_quizzes');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        const matched = parsed.find((item: { id: string; questions: Question[] }) => item.id === topic);
+        if (matched && matched.questions) {
+          return getShuffledQuiz(matched.questions);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to load custom quiz in test page:", e);
+    }
+
+    return [];
+  }, [topic]);
+
+  if (!topic || questions.length === 0) {
     return (
       <div className="title-container">
-         <h2>Quiz not found!</h2>
-         <button className="start-button" onClick={() => navigate('/')}>
-            <span className="start-button-text">Go back home</span>
-         </button>
+        <h2>Quiz not found!</h2>
+        <button className="start-button" onClick={() => navigate('/home')}>
+          <span className="start-button-text">Go back home</span>
+        </button>
       </div>
     );
   }
 
-  const questions: Question[] = useMemo(() => {
-    return topic && quizMap[topic] ? getShuffledQuiz(quizMap[topic]) : [];
-  }, [topic]);
   const isLastQuestion = currentIndex === questions.length - 1;
 
   const handleAnswerClick = (selectedOption: string) => {
     setUserAnswers(prev => ({ ...prev, [currentIndex]: selectedOption }));
-    if (isLastQuestion){
+    if (isLastQuestion) {
       setIsReviewScreen(true);
     }
-    else 
-    {
+    else {
       setCurrentIndex(currentIndex + 1);
     }
   };
 
   const handleSkipClick = () => {
-    if (isLastQuestion){
+    if (isLastQuestion) {
       setIsReviewScreen(true)
     }
-    else 
-    {
+    else {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -75,11 +91,11 @@ const TestPage = () => {
   const handleFinalSubmit = () => {
     const score = calculateFinalScore();
     const maxScore = questions.length;
-    
-    let calculatedXP = score * 10; 
-    
+
+    let calculatedXP = score * 10;
+
     if (score === maxScore && maxScore > 0) {
-      calculatedXP += 50; 
+      calculatedXP += 50;
     }
 
     setEarnedXP(calculatedXP);
@@ -88,39 +104,39 @@ const TestPage = () => {
 
   return (
     <div className="title-container">
-        <span className="persistent-logo">DevQuiz</span>
-        
-        {showResults ? (
-          <FinalResults 
-            topic={topic} 
-            questions={questions} 
-            userAnswers={userAnswers} 
-            score={calculateFinalScore()}
-            earnedXP={earnedXP} 
-          />
-        ) : isReviewScreen ? (
-          <PreSubmitReview 
-            topic={topic} 
-            questions={questions} 
-            userAnswers={userAnswers}
-            onNavigateQuestion={(index) => {
-              setCurrentIndex(index);
-              setIsReviewScreen(false);
-            }}
-            onSubmit={handleFinalSubmit} 
-          />
-        ) : (
-          <ActiveQuiz 
-            topic={topic}
-            questions={questions}
-            currentIndex={currentIndex}
-            userAnswers={userAnswers}
-            onAnswerClick={handleAnswerClick}
-            onSkipClick={handleSkipClick}
-            onPreviousClick={handlePreviousClick}
-            onNavigateToQuestion={(index) => setCurrentIndex(index)}
-          />
-        )}
+      <span className="persistent-logo" onClick={() => navigate('/home')}>DevQuiz</span>
+
+      {showResults ? (
+        <FinalResults
+          topic={topic}
+          questions={questions}
+          userAnswers={userAnswers}
+          score={calculateFinalScore()}
+          earnedXP={earnedXP}
+        />
+      ) : isReviewScreen ? (
+        <PreSubmitReview
+          topic={topic}
+          questions={questions}
+          userAnswers={userAnswers}
+          onNavigateQuestion={(index) => {
+            setCurrentIndex(index);
+            setIsReviewScreen(false);
+          }}
+          onSubmit={handleFinalSubmit}
+        />
+      ) : (
+        <ActiveQuiz
+          topic={topic}
+          questions={questions}
+          currentIndex={currentIndex}
+          userAnswers={userAnswers}
+          onAnswerClick={handleAnswerClick}
+          onSkipClick={handleSkipClick}
+          onPreviousClick={handlePreviousClick}
+          onNavigateToQuestion={(index) => setCurrentIndex(index)}
+        />
+      )}
     </div>
   );
 };

@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #2e2e2e;
-  border: 1px solid #444;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 2.5rem;
   width: 90%;
@@ -14,7 +14,7 @@
 
 .question-count {
   color: #10f70896;
-  font-family: var(--Inconsolata-mono, monospace);
+  font-family: var(--logo-font);
   margin-bottom: 1rem;
   font-size: 1.1rem;
 }
@@ -36,7 +36,7 @@
 .option-button {
   background-color: #3a3a3a;
   border: 1px solid #555;
-  color: #ffffff;
+  color: var(--text-white);
   padding: 15px 20px;
   border-radius: 8px;
   cursor: pointer;
@@ -71,29 +71,41 @@
   margin-top: 25px;
   padding: 14px 24px;
   font-size: 1.2rem; 
-  background-color: var(--color-bg-dark);
-  border: 1px solid var(--color-border-dark);
+  background-color: var(--card-bg, #2e2e2e);
+  border: 1px solid var(--card-border, #444444);
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.25s ease;
   will-change: transform, opacity;
 }
 
+.back-button:hover {
+  background-color: #3e3e3e;
+  border-color: var(--color-green, #10f708);
+  box-shadow: 0 0 10px rgba(16, 247, 8, 0.2);
+}
+
 .back-button-text {
-  font-family: var(--JetBrains-mono, monospace);
+  font-family: var(--mono);
   font-variant-ligatures: discretionary-ligatures;
   font-size: 1.2rem;
   letter-spacing: 0.5px; 
-  color: var(--color-text-green); 
+  color: var(--color-green, #10f708); 
+  transition: color 0.25s ease;
+}
+
+.back-button:hover .back-button-text {
+  color: var(--text-white);
 }
 
 .option-button.correct-answer {
   background-color: rgba(74, 222, 128, 0.15);
-  border: 2px solid #4ade80;
+  border: 2px solid var(--color-success);
 }
 
 .option-button.wrong-answer {
   background-color: rgba(248, 113, 113, 0.15);
-  border: 2px solid #f87171;
+  border: 2px solid var(--color-error);
 }
 
 .button-group {
@@ -113,7 +125,7 @@
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.2s ease;
-  font-family: var(--JetBrains-mono, monospace);
+  font-family: var(--mono);
 }
 
 .skip-button:hover, .previous-button:hover:not(:disabled) {
@@ -154,7 +166,7 @@
 }
 
 .progress-segment.correct {
-  background-color: #4ade80;
+  background-color: var(--color-success);
 }
 
 .progress-segment.correct:hover {
@@ -162,11 +174,11 @@
 }
 
 .progress-segment.incorrect {
-  background-color: #f87171;
+  background-color: var(--color-error);
 }
 
 .progress-segment.incorrect:hover {
-  background-color: #ef4444;
+  background-color: var(--color-error-hover);
 }
 
 .progress-segment.answered {
@@ -187,7 +199,7 @@
   font-weight: 700;
   margin: 0 0 1rem 0;
   text-align: center;
-  color: #ffffff;
+  color: var(--text-white);
 }
 
 .summary-status {
@@ -197,15 +209,15 @@
 }
 
 .summary-status.complete {
-  color: #4ade80; 
+  color: var(--color-success); 
 }
 
 .summary-status.complete strong {
-  color: #ffffff;
+  color: var(--text-white);
 }
 
 .summary-status.incomplete {
-  color: #f87171; 
+  color: var(--color-error); 
   font-weight: bold;
 }
 
